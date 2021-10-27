@@ -74,44 +74,7 @@ def flipkart(name = ""):
         return "           Some Error"
     return f"{flipkart_name}\nPrise : {flipkart_price}\n"
 # use to extract product from amazon
-def amazon(name):
-    try:
-        global amazon_url
-        name1 = name.replace(" ","-")
-        name2 = name.replace(" ","+")
-        amazon_url=f'https://www.amazon.in/{name1}/s?k={name2}'
-        #res = requests.get(f'https://www.amazon.in/{name1}/s?k={name2}',headers=headers)
-        res = requests.get(f'https://www.amazon.in/s?k={name}',headers=headers)
-        print(type(res))
-        soup = BeautifulSoup(res.text,'html.parser')
-        amazon_page = soup.select('.a-color-base.a-text-normal')
-        amazon_page_length = int(len(amazon_page))
-        score=0
-        for i in range(0,amazon_page_length):
-            name = name.upper()
-            amazon_name = soup.select('.a-color-base.a-text-normal')[i].getText().strip().upper()
-            tempScore = rele(amazon_name,name)
-            print(amazon_name,"+",name,score)
-            if tempScore>score:
-                score = tempScore
-                amazon_name = soup.select('.a-color-base.a-text-normal')[i].getText().strip().upper()
-                try:
-                    amazon_price = soup.select('.a-price-whole')[i].getText().strip().upper()
-                except:
-                    amazon_price = "Price not given"
-                if(score==1):
-                    break
-                #break
-            else:
-                i+=1
-                i=int(i)
-                if i==amazon_page_length and score==0:
-                    return '           Product Not Found1'
-                    break
-        return f"{amazon_name}\nPrice : {amazon_price}\n"
-    except :
-        amazon_price = '           Some Error Occured'
-    return amazon_price
+#enter amazon function
 
 def urls():
     return f"{flipkart_url}\n\n\n{amazon_url}"
